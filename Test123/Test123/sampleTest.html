@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    
+    
+    <script src="Scripts/jquery-1.10.2.js"></script>
+    <script src="Scripts/bootstrap.js"></script>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <script type="text/javascript">
+        var obj = [ {userName : "Robert", address : "NewYork", age : "30" },
+         {userName : "William", address : "NewYork", age : "31" },
+        {userName : "Eric", address : "Texas", age : "32" },
+         {userName : "Pauline", address : "Texas", age : "33" },
+        {userName : "Chris", address : "Dallas", age : "34" }
+
+        ];
+
+        
+        function loadGridInfo() {
+            $("#gridView").empty();
+            //Create a table and append the table body
+            var $table = $('<table border="2">');
+            var $tbody = $table.append('<tbody />').children('tbody');
+           
+            var username = $("#txtUserID").val();
+            if (username == '' || username == null)
+                alert("Please enter username");
+
+            var data = [];
+            for (var i = 0; i < obj.length; i++) {
+                if (obj[i].userName == username) {
+                    data.push(obj[i]);
+                }
+
+            }
+            if (data.length == 0)
+                alert("No records found.");
+
+            //data - return value from the Web API method
+            for (var i = 0; i < data.length; i++) {
+                //add a new row to the table
+                var $trow = $tbody.append('<tr />').children('tr:last');
+                //add a new column to display Name
+                var $tcol = $trow.append("<td/>").children('td:last')
+                 .append(data[i].userName);
+                //add a new column to display address
+                var $tcol = $trow.append("<td/>").children('td:last')
+                  .append(data[i].address);
+                //add a new column to display age
+                var $tcol = $trow.append("<td/>").children('td:last')
+                 .append(data[i].age);
+            }
+            //display the table in the div
+            $table.appendTo('#gridView');
+        };
+
+       
+        $.getJSON("api/userInformation",
+                       function (data) {
+                        //Clear the div displaying the result
+                           $("#gridView").empty();
+                          //Create a table and append the table body
+                          var $table = $('<table border="2">');
+                          var $tbody = $table.append('<tbody />').children('tbody');
+                          
+
+                          //data - return value from the Web API method
+                           for (var i = 0; i < data.length; i++) {
+                                   //add a new row to the table
+                               var $trow=$tbody.append('<tr />').children('tr:last');
+                                   //add a new column to display Name
+                               var $tcol = $trow.append("<td/>").children('td:last')
+                                .append(data[i].userName);
+                                   //add a new column to display address
+                              var $tcol = $trow.append("<td/>").children('td:last')
+                                .append(data[i].address);
+                                 //add a new column to display age
+                               var $tcol = $trow.append("<td/>").children('td:last')
+                                .append(data[i].age);
+                           }
+                        //display the table in the div
+                           $table.appendTo('#gridView');
+                       });
+
+
+    </script>
+</head>
+
+
+<body>
+    <div class="jumbotron">
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-10" >
+            <h2><b>User Information</b></h2>
+        </div>
+
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+            <span> User ID: </span>
+            <input type="text" id="txtUserID" style="border-radius:10px;width:180px;" />
+            <input type="button" class="btn btn-primary btn-lg" onclick="loadGridInfo();" value="Search" />
+        </div>
+        <div class="col-md-2" style="padding-top:25px;"></div>
+        <div class="col-md-10" style="padding-top:25px;">
+            <div id="gridView"></div>
+        </div>
+        <p class="col-md-4">  </p>
+        <p class="col-md-8" style="color:red;">Available User Info: Robert, William, Eric, Pauline, Chris</p>
+    </div>
+
+</body>
+</html>

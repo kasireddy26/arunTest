@@ -1,0 +1,74 @@
+﻿@*<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
+    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
+        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
+        is an ideal platform for building RESTful applications on the .NET Framework.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
+    </div>
+</div>*@
+<head>
+    <title></title>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+         $.getJSON("api/products",
+                       function (data) {
+                        //Clear the div displaying the result
+                           $("#gridView").empty();
+                          //Create a table and append the table body
+                          var $table = $('<table border="2">');
+                          var $tbody = $table.append('<tbody />').children('tbody');
+                          //data - return value from the Web API method
+                           for (var i = 0; i < data.length; i++) {
+                                   //add a new row to the table
+                               var $trow=$tbody.append('<tr />').children('tr:last');
+                                   //add a new column to display Name
+                               var $tcol = $trow.append("<td/>").children('td:last')
+                                .append(data[i].Name);
+                                   //add a new column to display Category
+                              var $tcol = $trow.append("<td/>").children('td:last')
+                                .append(data[i].Category);
+                                 //add a new column to display Price
+                               var $tcol = $trow.append("<td/>").children('td:last')
+                                .append(data[i].Price);
+                           }
+                        //display the table in the div
+                           $table.appendTo('#productView');
+                       });
+    </script>
+</head>
+<body>
+    
+</body>
+<div class="jumbotron">
+    <div class="col-md-12" style="padding:10px;">
+        <h4><b>User Information</b></h4>
+    </div>
+    
+    
+    <div class="col-md-12">
+        <span> User ID: </span>
+        <input type="text" id="txtUserID" style="border-radius:10px;width:180px;"/>
+        <input type="button" class="btn btn-primary btn-lg" onclick="loadGridInfo();" value="Search" />
+    </div>
+    <div class="col-md-12">
+        <div id="gridView"></div>
+    </div>
+    
+    
+</div>
